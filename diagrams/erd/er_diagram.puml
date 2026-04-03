@@ -1,0 +1,58 @@
+@startuml
+!define table(x) class x << (T,#FFAAAA) >>
+!define primary_key(x) <b>x</b>
+!define foreign_key(x) <i>x</i>
+
+table(order) {
+  <b>id</b> : UUID
+  user_id : UUID
+  status : VARCHAR(20)
+  total_amount : DECIMAL(10,2)
+  created_at : TIMESTAMP
+  --
+  foreign_key(user_id) -> user(id)
+}
+
+table(order_item) {
+  <b>id</b> : UUID
+  order_id : UUID
+  product_id : UUID
+  quantity : INT
+  price_at_time : DECIMAL(10,2)
+  --
+  foreign_key(order_id) -> order(id)
+  foreign_key(product_id) -> product(id)
+}
+
+table(product) {
+  <b>id</b> : UUID
+  name : VARCHAR(100)
+  category : VARCHAR(50)
+  price : DECIMAL(10,2)
+  stock : INT
+  is_available : BOOLEAN
+}
+
+table(payment) {
+  <b>id</b> : UUID
+  order_id : UUID
+  amount : DECIMAL(10,2)
+  method : VARCHAR(20)
+  status : VARCHAR(20)
+  paid_at : TIMESTAMP
+  --
+  foreign_key(order_id) -> order(id)
+}
+
+table(user) {
+  <b>id</b> : UUID
+  name : VARCHAR(100)
+  role : VARCHAR(20)
+  created_at : TIMESTAMP
+}
+
+order ||--o{ order_item
+order ||--|| payment
+order_item }o--|| product
+order }o--|| user
+@enduml
