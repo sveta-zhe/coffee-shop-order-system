@@ -1,0 +1,34 @@
+@startuml
+actor "Клиент" as Client
+participant "Веб-интерфейс" as Web
+participant "API Сервер" as API
+participant "База данных" as DB
+participant "Платежный шлюз" as Payment
+
+Client -> Web: Выбрать напитки и добавки
+Web -> Web: Сформировать заказ
+
+Client -> Web: Нажать "Оплатить"
+Web -> API: POST /orders (данные заказа)
+API -> DB: Сохранить заказ (status = new)
+DB --> API: order_id
+
+API -> Payment: Запрос на оплату
+Payment --> API: Статус оплаты
+
+alt Оплата успешна
+    API -> DB: Обновить статус (status = paid)
+    DB --> API: ok
+    API --> Web: 201 Created (order_id)
+    Web --> Client: "Заказ оплачен, готовится"
+else Ошибка оплаты
+    API --> Web: 400 Bad Request
+    Web --> Client: "Ошибка оплаты, попробуйте снова"
+end
+
+Client -> Web: Забрать заказ
+Web -> API: PATCH /orders/{id}/status (status = completed)
+API -> DB: Обновить статус
+DB --> API: ok
+API --> Web: 200 ok
+@enduml
