@@ -12,7 +12,6 @@
 ## Артефакты проекта
 
 ### Требования и анализ
-- [Business context](docs/01_requirements/business_context.md)
 - [User personas](docs/01_requirements/user_personas.md)
 - [User stories (Gherkin)](docs/01_requirements/user_stories_gherkin.md)
 
@@ -51,6 +50,7 @@
 3. Изучайте артефакты в порядке нумерации папок
 
 ## tree /F
+``` text 
 README.md
 │   
 ├───diagrams
@@ -122,7 +122,7 @@ README.md
     │   test_data.sql
     │   
     └───src
-            main.py
+            main.py```
 
 ## Контакты
 Автор: Svetlana (системный аналитик)  
