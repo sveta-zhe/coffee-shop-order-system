@@ -122,7 +122,8 @@ README.md
     │   test_data.sql
     │   
     └───src
-            main.py```
+            main.py
+```
 
 ## Контакты
 Автор: Svetlana (системный аналитик)  
